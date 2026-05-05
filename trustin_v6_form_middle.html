@@ -1,0 +1,193 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--a:#1A5C3A;--al:#EAF3EE;--ab:#2E7D52;--bg:#FAFAF7;--card:#fff;--br:#E4E2DC;}
+body{background:var(--bg);font-family:'Inter',sans-serif;color:#111110;}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:20px 3rem;background:var(--card);border-bottom:1px solid var(--br);}
+.logo{font-family:'Fraunces',serif;font-weight:700;font-size:21px;color:#111110;}
+.logo span{color:var(--a);}
+.langs{display:flex;gap:3px;}
+.lb{font-size:11px;font-weight:500;padding:5px 12px;border-radius:6px;border:1px solid var(--br);background:none;cursor:pointer;color:#5A5A54;transition:.15s;font-family:'Inter',sans-serif;}
+.lb.on{background:var(--a);color:#fff;border-color:var(--a);}
+
+/* HERO */
+.b1{align-items:center;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--br);}
+.b1-left{padding:3rem 3.5rem 3rem 3rem;border-right:1px solid var(--br);display:flex;flex-direction:column;gap:2.25rem;}
+.eyebrow{font-size:11px;font-weight:500;color:var(--a);letter-spacing:1.5px;text-transform:uppercase;}
+h1{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(2.2rem,3.2vw,3rem);line-height:1.1;letter-spacing:-1px;color:#111110;}
+h1 i{font-style:italic;color:var(--a);}
+.lead{font-size:15px;line-height:1.9;color:#3D3D38;max-width:400px;}
+.trust-row{display:flex;flex-direction:column;gap:12px;padding-top:1rem;border-top:1px solid var(--br);}
+.trust-pill{display:flex;align-items:center;gap:10px;font-size:13px;color:#4A4A45;}
+.trust-pill svg{width:15px;height:15px;stroke:var(--a);fill:none;stroke-width:2;flex-shrink:0;}
+.b1-right{padding:3rem 3rem 3rem 3.5rem;background:var(--card);display:flex;align-items:center;}
+.hero-quote blockquote{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.25rem,2vw,1.65rem);line-height:1.55;color:#111110;border-left:3px solid var(--a);padding-left:1.5rem;}
+.hero-quote blockquote cite{display:block;margin-top:1.25rem;font-style:normal;font-family:'Inter',sans-serif;font-size:12px;color:#5A5A54;}
+
+/* STEPS */
+.b2-header{padding:3rem 3rem 2rem;border-bottom:1px solid var(--br);text-align:center;}
+.b2-header p{font-size:10px;font-weight:600;color:var(--a);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;opacity:0.7;}
+.b2-header h2{font-family:'Fraunces',serif;font-weight:700;font-size:2rem;letter-spacing:-0.5px;color:#111110;}
+.b2-steps{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--br);}
+.step{padding:3rem 2.5rem;border-right:1px solid var(--br);}
+.step:last-child{border-right:none;}
+.step-n{font-size:10px;font-weight:500;color:var(--a);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1.5rem;}
+.step h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;margin-bottom:10px;line-height:1.25;color:#111110;}
+.step p{font-size:13px;color:#4A4A45;line-height:1.8;}
+.badge{display:inline-block;margin-top:1.25rem;font-size:10px;font-weight:500;padding:4px 9px;border-radius:4px;}
+.b-now{background:var(--al);color:var(--a);}
+.b-soon{background:#EDECE8;color:#888880;}
+
+/* WAITLIST BAND */
+.waitlist-band{background:var(--card);border-bottom:1px solid var(--br);padding:4rem 3rem; display: flex; justify-content: center;}
+.wb-inner{display:grid;grid-template-columns:1fr 1.6fr;gap:4rem;align-items:start;max-width:900px;}
+.wb-left h2{font-family:'Fraunces',serif;font-weight:700;font-size:1.6rem;letter-spacing:-0.5px;color:#111110;margin-bottom:10px;}
+.wb-left p{font-size:14px;color:#4A4A45;line-height:1.8;}
+.wb-right{}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.fld{display:flex;flex-direction:column;gap:5px;margin-bottom:10px;}
+.fld label{font-size:10px;font-weight:500;color:#5A5A54;letter-spacing:0.8px;text-transform:uppercase;}
+.fld input{height:44px;border:1px solid var(--br);border-radius:7px;padding:0 13px;font-size:13px;font-family:'Inter',sans-serif;color:#111110;background:var(--bg);transition:border .15s;}
+.fld input:focus{outline:none;border-color:var(--a);}
+.fld input::placeholder{color:#C4C2BB;}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:12px 13px;border:1px solid var(--br);border-radius:7px;cursor:pointer;margin-bottom:14px;transition:border .15s;}
+.chk:hover{border-color:var(--a);}
+.cbox{width:16px;height:16px;border:1.5px solid var(--br);border-radius:4px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:.15s;}
+.cbox.on{background:var(--a);border-color:var(--a);}
+.cbox svg{width:9px;height:9px;stroke:#fff;fill:none;stroke-width:2.5;display:none;}
+.cbox.on svg{display:block;}
+.ctt{font-size:11px;color:#4A4A45;line-height:1.7;}
+.ctt a{color:var(--a);}
+.btn{width:100%;height:48px;background:var(--a);color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;transition:.15s;}
+.btn:hover:not(:disabled){background:var(--ab);}
+.btn:disabled{background:#C4C2BB;cursor:default;}
+.fine{font-size:11px;color:#C4C2BB;text-align:center;margin-top:9px;}
+.ok{display:none;padding:1.5rem 0;}
+.ok.show{display:flex;align-items:center;gap:1rem;}
+.ok-ic{width:44px;height:44px;border-radius:50%;background:var(--al);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ok-ic svg{width:20px;height:20px;stroke:var(--a);fill:none;stroke-width:2;}
+.ok h3{font-family:'Fraunces',serif;font-weight:600;font-size:1rem;margin-bottom:4px;color:#111110;}
+.ok p{font-size:12px;color:#4A4A45;}
+
+/* STATS */
+.b4{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--br);}
+.stat{padding:3.5rem 2.5rem;text-align:center;border-right:1px solid var(--br);}
+.stat:last-child{border-right:none;}
+.stat-n{font-family:'Fraunces',serif;font-weight:700;font-size:2.8rem;color:var(--a);line-height:1;}
+.stat-l{font-size:13px;color:#4A4A45;margin-top:8px;line-height:1.5;}
+
+footer{padding:1.5rem 3rem;display:flex;justify-content:center;align-items:center;}
+.fl{font-size:11px;color:#888880;}
+.fr a{font-size:11px;color:#888880;text-decoration:none;margin-left:1.5rem;}
+</style>
+
+<nav>
+  <div class="logo">Trust<span>IN</span></div>
+  <div class="langs">
+    <button class="lb on" onclick="sl('en',this)">EN</button>
+    <button class="lb" onclick="sl('de',this)">DE</button>
+    <button class="lb" onclick="sl('ru',this)">RU</button>
+  </div>
+</nav>
+
+<section class="b1">
+  <div class="b1-left">
+    <p class="eyebrow" id="ey">Beta · Saxony, Germany</p>
+    <h1 id="h1">The legal way to earn in Germany —<br><i>from day one</i></h1>
+    <p class="lead" id="lead">Freiberufler registration, student matching, and automatic invoicing — all in one place. Built for foreigners navigating the German system.</p>
+    <div class="trust-row">
+      <div class="trust-pill"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg><span id="tp1">Officially compliant with German law</span></div>
+      <div class="trust-pill"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span id="tp2">From registration to income in 7 days</span></div>
+      <div class="trust-pill"><svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><span id="tp3">Support in English, German and Russian</span></div>
+    </div>
+  </div>
+  <div class="b1-right">
+    <div class="hero-quote">
+      <blockquote id="quote">"Existing platforms leave you alone with German bureaucracy — we answer the question 'am I even allowed to work like this?' on day one."<cite id="cite">— TrustIN founding team, Dresden</cite></blockquote>
+    </div>
+  </div>
+</section>
+
+<div class="b2-header">
+  <p id="hw-label">How it works</p>
+  <h2 id="hw-title">Three steps to legal income</h2>
+</div>
+<section class="b2-steps">
+  <div class="step"><p class="step-n" id="sn1">Step 01</p><h3 id="sh1">Register as Freiberufler</h3><p id="sd1">We guide you through German self-employment registration in 30 minutes — step by step, in your language. No lawyers, no confusion.</p><span class="badge b-now" id="st1">Available now</span></div>
+  <div class="step"><p class="step-n" id="sn2">Step 02</p><h3 id="sh2">Get matched with students</h3><p id="sd2">Students in your city search by subject and find you. We handle the matching — you show up and teach what you know.</p><span class="badge b-soon" id="st2">Coming soon</span></div>
+  <div class="step"><p class="step-n" id="sn3">Step 03</p><h3 id="sh3">Earn, invoice, repeat</h3><p id="sd3">Invoices are generated automatically after every lesson. Archive them or send directly to the Finanzamt — your call.</p><span class="badge b-soon" id="st3">Roadmap</span></div>
+</section>
+
+<!-- WAITLIST BAND -->
+<section class="waitlist-band">
+  <div class="wb-inner">
+    <div class="wb-left">
+      <h2 id="wb-h">Ready to start?</h2>
+      <p id="wb-p">Join the waitlist and be first when TrustIN launches in your city. It's free and takes 30 seconds.</p>
+    </div>
+    <div class="wb-right">
+      <div id="form-body">
+        <div class="row2">
+          <div class="fld"><label id="l1">First name</label><input id="fn" placeholder="Anna"></div>
+          <div class="fld"><label id="l2">Last name</label><input id="ln" placeholder="Müller"></div>
+        </div>
+        <div class="fld"><label id="l3">Email</label><input id="em" type="email" placeholder="anna@example.com"></div>
+        <div class="chk" onclick="tog()">
+          <div class="cbox" id="cb"><svg viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
+          <p class="ctt" id="ctt">I agree to the storage and processing of my personal data in accordance with the <a href="#">Privacy Policy</a> (GDPR).</p>
+        </div>
+        <button class="btn" id="sbtn" onclick="sub()" disabled>Join waitlist</button>
+        <p class="fine" id="fine">Free to join · No credit card needed</p>
+      </div>
+      <div class="ok" id="ok">
+        <div class="ok-ic"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
+        <div><h3 id="ok-h">You're on the list</h3><p id="ok-p">We'll be in touch when TrustIN launches near you.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="b4">
+  <div class="stat"><div class="stat-n">35k+</div><div class="stat-l" id="stat1">International students<br>in Saxony alone</div></div>
+  <div class="stat"><div class="stat-n">30 min</div><div class="stat-l" id="stat2">Average time to complete<br>Freiberufler registration</div></div>
+  <div class="stat"><div class="stat-n">7 days</div><div class="stat-l" id="stat3">From zero to your<br>first legal income</div></div>
+</section>
+
+<footer>
+  <span class="fl" id="fl">© 2025 TrustIN · Dresden, Saxony</span>
+  <span class="fr"><a href="#" id="fp">Privacy Policy</a><a href="#">Impressum</a></span>
+</footer>
+
+<script>
+let agreed=false;
+function tog(){agreed=!agreed;document.getElementById('cb').classList.toggle('on',agreed);chk();}
+function chk(){const go=document.getElementById('fn').value.trim()&&document.getElementById('ln').value.trim()&&document.getElementById('em').value.includes('@')&&agreed;document.getElementById('sbtn').disabled=!go;}
+['fn','ln','em'].forEach(id=>document.getElementById(id).addEventListener('input',chk));
+function sub(){document.getElementById('form-body').style.display='none';document.getElementById('ok').classList.add('show');}
+const C={
+  en:{ey:'Beta · Saxony, Germany',h1:'The legal way to earn in Germany —<br><i>from day one</i>',lead:"Freiberufler registration, student matching, and automatic invoicing — all in one place. Built for foreigners navigating the German system.",tp1:'Officially compliant with German law',tp2:'From registration to income in 7 days',tp3:'Support in English, German and Russian',quote:"\"Existing platforms leave you alone with German bureaucracy — we answer the question 'am I even allowed to work like this?' on day one.\"",cite:'— TrustIN founding team, Dresden',hwL:'How it works',hwT:'Three steps to legal income',sn1:'Step 01',sh1:'Register as Freiberufler',sd1:'We guide you through German self-employment registration in 30 minutes — step by step, in your language. No lawyers, no confusion.',st1:'Available now',sn2:'Step 02',sh2:'Get matched with students',sd2:'Students in your city search by subject and find you. We handle the matching — you show up and teach what you know.',st2:'Coming soon',sn3:'Step 03',sh3:'Earn, invoice, repeat',sd3:'Invoices are generated automatically after every lesson. Archive them or send directly to the Finanzamt — your call.',st3:'Roadmap',wbH:'Ready to start?',wbP:"Join the waitlist and be first when TrustIN launches in your city. It's free and takes 30 seconds.",l1:'First name',l2:'Last name',l3:'Email',ct:'I agree to the storage and processing of my personal data in accordance with the <a href="#">Privacy Policy</a> (GDPR).',btn:'Join waitlist',fine:'Free to join · No credit card needed',okH:"You're on the list",okP:"We'll be in touch when TrustIN launches near you.",stat1:'International students<br>in Saxony alone',stat2:'Average time to complete<br>Freiberufler registration',stat3:'From zero to your<br>first legal income',fl:'© 2025 TrustIN · Dresden, Saxony',fp:'Privacy Policy',p1:'Anna',p2:'Müller',p3:'anna@example.com'},
+  de:{ey:'Beta · Sachsen, Deutschland',h1:'Legal verdienen in Deutschland —<br><i>ab dem ersten Tag</i>',lead:'Freiberufler-Anmeldung, Schülervermittlung und automatische Rechnungen — alles an einem Ort. Für Ausländer, die das deutsche System navigieren.',tp1:'Rechtlich abgesichert nach deutschem Recht',tp2:'Von der Anmeldung zum Einkommen in 7 Tagen',tp3:'Support auf Englisch, Deutsch und Russisch',quote:'„Bestehende Plattformen lassen dich allein mit der deutschen Bürokratie — wir beantworten die Frage „Darf ich das eigentlich?" am ersten Tag."',cite:'— TrustIN-Gründungsteam, Dresden',hwL:'So funktioniert es',hwT:'Drei Schritte zu legalem Einkommen',sn1:'Schritt 01',sh1:'Als Freiberufler anmelden',sd1:'Wir führen dich in 30 Minuten durch die Anmeldung — Schritt für Schritt, in deiner Sprache.',st1:'Jetzt verfügbar',sn2:'Schritt 02',sh2:'Schüler finden',sd2:'Schüler in deiner Stadt finden dich nach Fach. Wir kümmern uns um die Vermittlung.',st2:'Demnächst',sn3:'Schritt 03',sh3:'Verdienen, abrechnen, wiederholen',sd3:'Rechnungen automatisch nach jeder Stunde. Archivieren oder direkt ans Finanzamt.',st3:'Roadmap',wbH:'Bereit loszulegen?',wbP:'Trag dich in die Warteliste ein und sei der Erste, wenn TrustIN in deiner Stadt startet.',l1:'Vorname',l2:'Nachname',l3:'E-Mail',ct:'Ich stimme der Speicherung meiner Daten gemäß <a href="#">Datenschutzerklärung</a> (DSGVO) zu.',btn:'Eintragen',fine:'Kostenlos · Keine Kreditkarte',okH:'Du bist dabei',okP:'Wir melden uns, wenn TrustIN in deiner Stadt startet.',stat1:'Internationale Studierende<br>allein in Sachsen',stat2:'Durchschnittliche Zeit für die<br>Freiberufler-Anmeldung',stat3:'Von null bis zum<br>ersten legalen Einkommen',fl:'© 2025 TrustIN · Dresden, Sachsen',fp:'Datenschutz',p1:'Anna',p2:'Müller',p3:'anna@beispiel.de'},
+  ru:{ey:'Бета · Саксония, Германия',h1:'Легальный заработок в Германии —<br><i>с первого дня</i>',lead:'Регистрация Freiberufler, поиск учеников и автоматические счета — всё в одном месте. Создано для иностранцев в немецкой системе.',tp1:'Официально и в соответствии с немецким законом',tp2:'От регистрации до дохода за 7 дней',tp3:'Поддержка на английском, немецком и русском',quote:'«Существующие платформы оставляют вас один на один с немецкой бюрократией — мы отвечаем на вопрос «а я вообще имею право так работать?» в первый же день.»',cite:'— Команда основателей TrustIN, Дрезден',hwL:'Как это работает',hwT:'Три шага до легального дохода',sn1:'Шаг 01',sh1:'Регистрация Freiberufler',sd1:'Проведём через каждый шаг за 30 минут — на вашем языке. Никаких юристов, никакой путаницы.',st1:'Уже доступно',sn2:'Шаг 02',sh2:'Найти учеников',sd2:'Ученики в вашем городе ищут по предмету и находят вас. Мы делаем связку.',st2:'Скоро',sn3:'Шаг 03',sh3:'Зарабатывать и выставлять счета',sd3:'Счета формируются автоматически после каждого урока. В архив или сразу в Finanzamt.',st3:'В планах',wbH:'Готовы начать?',wbP:'Вступайте в список ожидания и получите доступ первыми, когда мы запустимся в вашем городе.',l1:'Имя',l2:'Фамилия',l3:'Email',ct:'Я согласен(а) на хранение и обработку моих персональных данных согласно <a href="#">Политике конфиденциальности</a> (GDPR).',btn:'Записаться',fine:'Бесплатно · Без карты',okH:'Вы в списке',okP:'Напишем, когда TrustIN запустится в вашем городе.',stat1:'Иностранных студентов<br>только в Саксонии',stat2:'Среднее время регистрации<br>Freiberufler',stat3:'От нуля до первого<br>легального дохода',fl:'© 2025 TrustIN · Дрезден, Саксония',fp:'Конфиденциальность',p1:'Анна',p2:'Мюллер',p3:'anna@example.com'}
+};
+function sl(l,btn){
+  document.querySelectorAll('.lb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  const c=C[l],s=(id,v)=>{const e=document.getElementById(id);if(e)e.innerHTML=v;};
+  s('ey',c.ey);s('h1',c.h1);s('lead',c.lead);s('tp1',c.tp1);s('tp2',c.tp2);s('tp3',c.tp3);
+  s('quote',c.quote);s('cite',c.cite);
+  s('hw-label',c.hwL);s('hw-title',c.hwT);
+  s('sn1',c.sn1);s('sh1',c.sh1);s('sd1',c.sd1);s('st1',c.st1);
+  s('sn2',c.sn2);s('sh2',c.sh2);s('sd2',c.sd2);s('st2',c.st2);
+  s('sn3',c.sn3);s('sh3',c.sh3);s('sd3',c.sd3);s('st3',c.st3);
+  s('wb-h',c.wbH);s('wb-p',c.wbP);
+  s('l1',c.l1);s('l2',c.l2);s('l3',c.l3);s('ctt',c.ct);
+  document.getElementById('sbtn').innerHTML=c.btn;s('fine',c.fine);
+  s('ok-h',c.okH);s('ok-p',c.okP);
+  s('stat1',c.stat1);s('stat2',c.stat2);s('stat3',c.stat3);
+  s('fl',c.fl);s('fp',c.fp);
+  document.getElementById('fn').placeholder=c.p1;
+  document.getElementById('ln').placeholder=c.p2;
+  document.getElementById('em').placeholder=c.p3;
+}
+</script>
