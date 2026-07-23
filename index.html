@@ -180,6 +180,9 @@
     .bsub:disabled { opacity: .25; cursor: not-allowed; }
     .bsub:not(:disabled):hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,99,235,0.35); }
     .microcopy { font-size: 11px; color: var(--dim); text-align: center; margin-top: 10px; }
+    .form-error { display: none; font-size: 12px; line-height: 1.5; color: #f87171; text-align: center; margin-top: 10px; }
+    .form-error.vis { display: block; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
     /* SUCCESS */
     .ok { display: none; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 20px 0; }
@@ -357,18 +360,18 @@
   <!-- HERO FORM -->
   <div class="fi">
     <div class="hero-form-wrap" id="hero-form">
-      <div id="hform-body">
+      <form id="hform-body" novalidate autocomplete="on" onsubmit="sub(event)">
         <p class="form-title" id="form-title">Reserve your spot</p>
         <p class="form-subtitle" id="form-subtitle">Join the waitlist — we'll reach out when we launch in your city.</p>
         <div class="r2">
-          <div class="fld"><label id="l1">First name</label><input id="fn" placeholder="Anna"></div>
-          <div class="fld"><label id="l2">Last name</label><input id="ln" placeholder="Müller"></div>
+          <div class="fld"><label for="wf-first-name" id="l1">First name</label><input id="wf-first-name" name="first_name" autocomplete="given-name" placeholder="Anna"></div>
+          <div class="fld"><label for="wf-last-name" id="l2">Last name</label><input id="wf-last-name" name="last_name" autocomplete="family-name" placeholder="Müller"></div>
         </div>
-        <div class="fld"><label id="l3">Email</label><input id="em" type="email" placeholder="anna@example.com"></div>
+        <div class="fld"><label for="wf-email" id="l3">Email</label><input id="wf-email" name="email" type="email" autocomplete="email" placeholder="anna@example.com"></div>
         <div class="r2">
           <div class="fld">
-            <label id="l4">Who are you?</label>
-            <select id="role">
+            <label for="wf-role" id="l4">Who are you?</label>
+            <select id="wf-role" name="role">
               <option value="" id="r0">Choose</option>
               <option value="migrant-tutor" id="r1">Tutor (migrant)</option>
               <option value="want-to-start" id="r2">Want to start teaching</option>
@@ -377,8 +380,8 @@
             </select>
           </div>
           <div class="fld">
-            <label id="l5">City</label>
-            <select id="city">
+            <label for="wf-city" id="l5">City</label>
+            <select id="wf-city" name="city">
               <option value="" id="c0">Choose</option>
               <option value="dresden" id="c1">Dresden</option>
               <option value="leipzig" id="c2">Leipzig</option>
@@ -388,8 +391,8 @@
           </div>
         </div>
         <div class="fld">
-          <label id="l6">Age group</label>
-          <select id="age">
+          <label for="wf-age" id="l6">Age group</label>
+          <select id="wf-age" name="age_group">
             <option value="" id="a0">Choose</option>
             <option value="18-24" id="a1">18–24</option>
             <option value="25-32" id="a2">25–32</option>
@@ -401,9 +404,11 @@
           <div class="cbox" id="cb"><svg viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div>
           <p class="ctt" id="ctt">I agree to the processing of my personal data in accordance with the <a href="#">Privacy Policy</a> (GDPR).</p>
         </div>
-        <button class="bsub" id="sbtn" onclick="sub('hform-body','hok')" disabled id="sbtn1">Join waitlist</button>
+        <input type="text" id="wf-company" name="company" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit" class="bsub" id="sbtn" disabled>Join waitlist</button>
+        <p class="form-error" id="wf-error" role="alert"></p>
         <p class="microcopy" id="mc1">Free to join · No lawyer needed · In your language</p>
-      </div>
+      </form>
       <div class="ok" id="hok">
         <div class="ok-ring"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
         <h3 id="ok-h">You're on the list</h3>
@@ -762,19 +767,94 @@ function tog(cbId, btnId) {
   upd();
 }
 
+/* ============================================================
+   WAITLIST FORM → n8n WEBHOOK
+   TEST (ловит одну отправку после "Listen for test event"):
+     http://localhost:5678/webhook/b8f50390-28c1-4265-9fb9-5e071ff94dc4
+   PROD (после активации воркфлоу) — тот же UUID, но /webhook/:
+     http://localhost:5678/webhook/b8f50390-28c1-4265-9fb9-5e071ff94dc4
+   ============================================================ */
+const N8N_WEBHOOK_URL = 'http://localhost:5678/webhook/b8f50390-28c1-4265-9fb9-5e071ff94dc4';
+
+const MSG = {
+  en: { sending: 'Sending…', error: 'Could not send. Please try again in a moment.' },
+  de: { sending: 'Wird gesendet…', error: 'Senden fehlgeschlagen. Bitte versuche es gleich erneut.' },
+  ru: { sending: 'Отправляем…', error: 'Не удалось отправить. Попробуй ещё раз через минуту.' },
+  uk: { sending: 'Надсилаємо…', error: 'Не вдалося надіслати. Спробуй ще раз за хвилину.' }
+};
+
+const val = id => (document.getElementById(id) || { value: '' }).value.trim();
+
 function upd() {
-  const fn = (document.getElementById('fn') || {value:''}).value.trim();
-  const em = (document.getElementById('em') || {value:''}).value.trim();
   const sb = document.getElementById('sbtn');
-  if (sb) sb.disabled = !(chkd.cb && fn && em);
+  if (!sb || sb.dataset.busy === '1') return;
+  const email = val('wf-email');
+  sb.disabled = !(chkd.cb && val('wf-first-name') && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
 }
 
-document.getElementById('fn').addEventListener('input', upd);
-document.getElementById('em').addEventListener('input', upd);
+['wf-first-name', 'wf-last-name', 'wf-email'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', upd);
+});
 
-function sub(formId, okId) {
-  document.getElementById(formId).style.display = 'none';
-  document.getElementById(okId).classList.add('vis');
+function payload() {
+  const q = new URLSearchParams(location.search);
+  return {
+    first_name: val('wf-first-name'),
+    last_name:  val('wf-last-name'),
+    email:      val('wf-email').toLowerCase(),
+    role:       val('wf-role'),
+    city:       val('wf-city'),
+    age_group:  val('wf-age'),
+    gdpr_consent: chkd.cb === true,
+    language:   curLang,
+    source:     'landing',
+    page_url:   location.href,
+    referrer:   document.referrer || null,
+    utm_source:   q.get('utm_source'),
+    utm_medium:   q.get('utm_medium'),
+    utm_campaign: q.get('utm_campaign'),
+    submitted_at: new Date().toISOString()
+  };
+}
+
+async function sub(e) {
+  if (e) e.preventDefault();
+  const btn = document.getElementById('sbtn');
+  const err = document.getElementById('wf-error');
+  if (!btn || btn.disabled) return;
+
+  // honeypot: заполнено — значит бот, тихо показываем успех
+  if (val('wf-company')) { done(); return; }
+
+  const m = MSG[curLang] || MSG.en;
+  const label = btn.innerHTML;
+  btn.dataset.busy = '1';
+  btn.disabled = true;
+  btn.innerHTML = m.sending;
+  err.classList.remove('vis');
+
+  try {
+    const res = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload())
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    done();
+  } catch (ex) {
+    console.error('[waitlist] submit failed:', ex);
+    err.textContent = m.error;
+    err.classList.add('vis');
+    btn.innerHTML = label;
+    btn.dataset.busy = '0';
+    upd();
+  }
+}
+
+function done() {
+  document.getElementById('hform-body').style.display = 'none';
+  document.getElementById('hok').classList.add('vis');
 }
 
 // Auto-detect language
