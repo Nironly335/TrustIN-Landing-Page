@@ -768,19 +768,19 @@ function tog(cbId, btnId) {
 }
 
 /* ============================================================
-   WAITLIST FORM → n8n WEBHOOK
-   URL выбирается автоматически по хосту:
-     • localhost / 127.0.0.1 — локальная разработка, тестовый вебхук n8n
-     • любой другой домен (прод) — n8n на поддомене, боевой /webhook/
-   UUID вебхука один и тот же; меняется только хост и test/prod-путь.
-   ⚠ Подставь свой прод-поддомен n8n вместо N8N_DOMAIN ниже.
+   WAITLIST FORM — n8n WEBHOOK
+   Лендинг и вебхук на ОДНОМ хосте: n8n стоит за Caddy, который
+   отдаёт статику на / и проксирует /webhook/* в n8n.
+     • localhost / 127.0.0.1 → локальная разработка, тестовый вебхук n8n
+     • прод → относительный путь /webhook/<UUID>, тот же origin
+   Относительный путь не привязан к домену: при переезде на свой
+   домен правка здесь не нужна.
    ============================================================ */
 const WEBHOOK_UUID = 'b8f50390-28c1-4265-9fb9-5e071ff94dc4';
-const N8N_DOMAIN   = 'n8n.trustin.de';   // ← поддомен n8n из .env (N8N_DOMAIN)
 const IS_LOCAL = ['localhost', '127.0.0.1', ''].includes(location.hostname);
 const N8N_WEBHOOK_URL = IS_LOCAL
   ? `http://localhost:5678/webhook-test/${WEBHOOK_UUID}`   // dev: жми "Listen for test event"
-  : `https://${N8N_DOMAIN}/webhook/${WEBHOOK_UUID}`;        // prod: воркфлоу должен быть активирован
+  : `/webhook/${WEBHOOK_UUID}`;                            // prod: воркфлоу должен быть Published
 
 const MSG = {
   en: { sending: 'Sending…', error: 'Could not send. Please try again in a moment.' },
